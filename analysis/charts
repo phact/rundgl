@@ -8,3 +8,4 @@ mv throughput.png propertythroughput.png
 mv throughput.png edgethroughput.png
 ./graph-loader-throughput vertex-throughput.csv edge-throughput.csv property-throughput.csv
 mv throughput.png total-throughput.png
+python -m SimpleHTTPServer
