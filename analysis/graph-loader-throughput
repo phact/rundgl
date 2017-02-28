@@ -1,0 +1,76 @@
+#!/bin/bash
+function help
+{
+    echo "Usage: $0 <file> [<file>...] [-v]" >&2
+    echo "" >&2
+    echo "Generates the throughput charts from DSE Graph Loader CSV files" >&2
+    echo "" >&2
+    echo "  -v   Print runtime information" >&2
+}
+while getopts "hv:" opt; do
+    case $opt in
+        h)
+            help
+            exit
+            ;;
+        v)
+            verbose="yes"
+            ;;
+    esac
+done
+if [ $# == 0 ]
+then
+    echo "Missing parameter: <file>" >&2
+    help
+    exit 1
+fi
+(
+    output_file="throughput.png"
+    echo "set term png size 1600,800"
+    echo "set output '$output_file'"
+    echo "set datafile separator ';'"
+    echo "set xdata time"
+    echo "set timefmt '%Y-%m-%d %H:%M:%S'"
+    echo "set format x '%Y-%m-%d %H:%M:%S'"
+    echo "set bmargin 5"
+    echo "set rmargin 6"
+    echo "set xtics rotate by 30 right"
+    echo "set yrange [0:]"
+    echo "set grid"
+    echo -n "plot 0/0 notitle"
+    for file in $@
+    do
+        if [[ "$file" == *.xz ]]
+        then
+            command="< xzcat $file"
+            avg_throughput=`xzcat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+        elif [[ "$file" == *.gz ]]
+        then
+            command="< gzcat $file"
+            avg_throughput=`gzcat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+        else
+            command="$file"
+            avg_throughput=`cat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+        fi
+        echo -n ", '$command' using 1:2 with lines linewidth 2 title '$file (avg: $avg_throughput)' smooth bezier"
+    done
+    echo
+) | gnuplot
+(
+echo "File | Average throughput"
+echo "-- | --"
+for file in $@
+do
+    if [[ "$file" == *.xz ]]
+    then
+        avg_throughput=`xzcat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+    elif [[ "$file" == *.gz ]]
+    then
+        avg_throughput=`gzcat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+    else
+        avg_throughput=`cat $file | LC_ALL=en_US awk -F ';' '{ sum += $2; n++ } END { if (n > 0) printf("%'"'"'.0f", sum / n); }'`
+    fi
+    echo "$file | $avg_throughput"
+done
+) | column -ts '|'
+

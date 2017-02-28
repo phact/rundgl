@@ -1,0 +1,10 @@
+cp ../loader.log .
+./consolidate-loader-log loader.log
+./graph-loader-throughput vertex-throughput.csv
+mv throughput.png vertexthroughput.png
+./graph-loader-throughput property-throughput.csv
+mv throughput.png propertythroughput.png
+./graph-loader-throughput edge-throughput.csv
+mv throughput.png edgethroughput.png
+./graph-loader-throughput vertex-throughput.csv edge-throughput.csv property-throughput.csv
+mv throughput.png total-throughput.png

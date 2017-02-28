@@ -1,0 +1,62 @@
+#!/bin/bash
+
+set -e
+#set -x
+TMPDIR="/mnt/tmp"
+if [ ! -d "$TMPDIR" ]; then
+  sudo mkdir "$TMPDIR"
+  sudo chown ${USER} ${TMPDIR}
+fi
+
+rm -f loader.log loader.gclog loadedfiles.txt
+echo "Started: " + $(date) >> loadedfiles.txt
+
+#remember the directory match needs to end in *
+FILES=($(ls -1fd /mnt/new-data/* | grep json.gz|sort))
+FILECOUNT=${#FILES[@]}
+BUCKETSIZE=40
+
+BUCKETCOUNT=$((($FILECOUNT / $BUCKETSIZE) +1))
+LASTBUCKET=$(($FILECOUNT % $BUCKETSIZE))
+
+trap "exit" INT
+#for f in /mnt/new-data/new-data-10M.json.*a.gz; do
+for bucket in `seq "$BUCKETCOUNT"` ; do
+  INDEX=$(((0+$bucket-1)*$BUCKETSIZE))
+  LENGTH=$BUCKETSIZE
+
+  #echo $INDEX
+
+  #echo "{FILES[@]:$INDEX:$LENGTH}"
+  FILELISTCOUNT=$(echo "${FILES[@]:$INDEX:$LENGTH}"|wc -w )
+  FILELIST=$(echo "${FILES[@]:$INDEX:$LENGTH}")
+  echo "Processing $FILELISTCOUNT Files: $FILELIST"
+
+#grc is nice for aesthetics, if you don't want to install it just comment out this line.
+  grc \
+    java \
+      -Xloggc:loader.gclog \
+      -XX:+PrintGCDateStamps \
+      -XX:+PrintGCDetails \
+      -XX:+PrintTenuringDistribution \
+      -XX:+PrintGCApplicationStoppedTime \
+      -XX:+PrintGCCause \
+      -XX:+HeapDumpOnOutOfMemoryError \
+      -XX:HeapDumpPath=. \
+      -Djava.io.tmpdir=/mnt/tmp \
+      -jar /path_to_dgl/dse-graph-loader-*-uberjar.jar \
+      -graph graph_dgl \
+      -address host \
+      ./mapper/generic_mapper.groovy \
+      -inputfilename "$FILELIST" \
+      -load_vertex_threads 32 \
+      -load_edge_threads 32 \
+            -read_threads 8 \
+      -abort_on_num_failures $((1 * 1000 * 1000)) \
+      -driver_retry_attempts 100 \
+      -preparation false \
+      -load_new true \
+      -vertex_complete false \
+      && echo "$(date) Loaded " "$FILELIST" >> ./loadedfiles.txt
+
+done

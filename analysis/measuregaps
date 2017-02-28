@@ -1,0 +1,5 @@
+#cat ../loader.log|grep queue|awk -F"DEBUG" '{print $1}' |sed "s/-//g"|sed "s/ //g"|sed "s/://g"|histogram.py
+echo "Minutes in which job was queueing"
+cat ./loader.log|grep queue|awk -F"DEBUG" '{print $1}'|awk -F":" '{print $1 ":" $2}'|uniq -c
+echo "Minutes in which job was writing"
+cat ./loader.log|grep ADD|awk -F"DEBUG" '{print $1}'|awk -F":" '{print $1 ":" $2}'|uniq -c
