@@ -1,1 +1,1 @@
-java -jar ebdse.jar activity type=file yaml=generic_graph cycles=100000 threads=200
+java -jar ebdse.jar activity type=file yaml=generic_graph cycles=5000000 threads=200
