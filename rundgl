@@ -5,6 +5,7 @@ HOST=localhost
 #either pull dgl to this path or point to DGL home
 DGL_DIR=dse-graph-loader-5.1.0-uberjar.jar
 DATA_DIR="data/"
+GRAPH_NAME="genericgraph"
 FILENAME_PATTERN=".csv"
 DATA_FULL_DIR="$PWD"/"$DATA_DIR"
 if [ -n "$1" ]; then
@@ -64,7 +65,7 @@ for bucket in `seq "$BUCKETCOUNT"` ; do
       -XX:HeapDumpPath=. \
       -Djava.io.tmpdir=/mnt/tmp \
       -jar "$DGL_DIR" \
-      -graph graph_dgl \
+      -graph "$GRAPH_NAME" \
       -address "$HOST" \
       "$MAPPING_PATH" \
       -inputfilename "$FILELIST" \
@@ -74,6 +75,7 @@ for bucket in `seq "$BUCKETCOUNT"` ; do
       -abort_on_num_failures $((1 * 1000 * 1000)) \
       -driver_retry_attempts 100 \
       -preparation false \
+      -create_schema false \
       -load_new true \
       -vertex_complete false \
       && echo "$(date) Loaded " "$FILELIST" >> ./loadedfiles.txt
