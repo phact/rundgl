@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-#set -x
+set -x
 TMPDIR="/mnt/tmp"
 if [ ! -d "$TMPDIR" ]; then
   sudo mkdir "$TMPDIR"
@@ -11,13 +11,29 @@ fi
 rm -f loader.log loader.gclog loadedfiles.txt
 echo "Started: " + $(date) >> loadedfiles.txt
 
+MAPPING_PATH=./mapping/generic_mapper_csv.groovy
+HOST=localhost
 #remember the directory match needs to end in *
-FILES=($(ls -1fd /mnt/new-data/* | grep json.gz|sort))
+DGL_DIR=/Users/sebastianestevez/Downloads/dse-graph-loader-5.1.0/dse-graph-loader-5.1.0-uberjar.jar
+#DGL_DIR=/path_to_dgl/dse-graph-loader-*-uberjar.jar
+DATA_DIR="data/"
+FILENAME_PATTERN=".csv"
+DATA_FULL_DIR="$PWD"/"$DATA_DIR"
+#on linux you can say ls -1fd to get the full path. I added awk here to keep osx compatibility
+FILES=($(ls -1f $(echo "$DATA_DIR") | grep "$FILENAME_PATTERN"|awk -v wd="$DATA_FULL_DIR" '{print wd $0}'|sort))
 FILECOUNT=${#FILES[@]}
 BUCKETSIZE=40
 
 BUCKETCOUNT=$((($FILECOUNT / $BUCKETSIZE) +1))
 LASTBUCKET=$(($FILECOUNT % $BUCKETSIZE))
+
+echo "$FILES"
+if [ -z "$FILES" ]; then
+    echo "no files found"
+    exit 1;
+fi
+
+echo $FILES
 
 trap "exit" INT
 #for f in /mnt/new-data/new-data-10M.json.*a.gz; do
@@ -44,10 +60,10 @@ for bucket in `seq "$BUCKETCOUNT"` ; do
       -XX:+HeapDumpOnOutOfMemoryError \
       -XX:HeapDumpPath=. \
       -Djava.io.tmpdir=/mnt/tmp \
-      -jar /path_to_dgl/dse-graph-loader-*-uberjar.jar \
+      -jar "$DGL_DIR" \
       -graph graph_dgl \
-      -address host \
-      ./mapper/generic_mapper.groovy \
+      -address "$HOST" \
+      "$MAPPING_PATH" \
       -inputfilename "$FILELIST" \
       -load_vertex_threads 32 \
       -load_edge_threads 32 \

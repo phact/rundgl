@@ -1,0 +1,15 @@
+name: generic_graph
+statements:
+  - prop1e
+  - Prop2e
+  - sampleidv1
+  - sampleidv2
+  - prop1v1
+  - Prop2v2
+bindings:
+  prop1e: NumberNameToString()
+  Prop2e: NumberNameToString()
+  sampleidv1: NumberNameToString()
+  sampleidv2: NumberNameToString()
+  prop1v1: NumberNameToString()
+  Prop2v2: NumberNameToString()
