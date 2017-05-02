@@ -1,5 +1,16 @@
 #!/bin/bash
 
+MAPPING_PATH=./mapping/generic_mapper_csv.groovy
+HOST=localhost
+#either pull dgl to this path or point to DGL home
+DGL_DIR=dse-graph-loader-5.1.0-uberjar.jar
+DATA_DIR="data/"
+FILENAME_PATTERN=".csv"
+DATA_FULL_DIR="$PWD"/"$DATA_DIR"
+if [ -n "$1" ]; then
+  HOST=$1
+fi
+
 set -e
 set -x
 TMPDIR="/mnt/tmp"
@@ -11,13 +22,6 @@ fi
 rm -f loader.log loader.gclog loadedfiles.txt
 echo "Started: " + $(date) >> loadedfiles.txt
 
-MAPPING_PATH=./mapping/generic_mapper_csv.groovy
-HOST=localhost
-#either pull dgl to this path or point to DGL home
-DGL_DIR=/dse-graph-loader-*-uberjar.jar
-DATA_DIR="data/"
-FILENAME_PATTERN=".csv"
-DATA_FULL_DIR="$PWD"/"$DATA_DIR"
 #on linux you can say ls -1fd to get the full path. I added awk here to keep osx compatibility
 FILES=($(ls -1f $(echo "$DATA_DIR") | grep "$FILENAME_PATTERN"|awk -v wd="$DATA_FULL_DIR" '{print wd $0}'|sort))
 FILECOUNT=${#FILES[@]}
