@@ -13,9 +13,8 @@ echo "Started: " + $(date) >> loadedfiles.txt
 
 MAPPING_PATH=./mapping/generic_mapper_csv.groovy
 HOST=localhost
-#remember the directory match needs to end in *
-DGL_DIR=/Users/sebastianestevez/Downloads/dse-graph-loader-5.1.0/dse-graph-loader-5.1.0-uberjar.jar
-#DGL_DIR=/path_to_dgl/dse-graph-loader-*-uberjar.jar
+#either pull dgl to this path or point to DGL home
+DGL_DIR=/dse-graph-loader-*-uberjar.jar
 DATA_DIR="data/"
 FILENAME_PATTERN=".csv"
 DATA_FULL_DIR="$PWD"/"$DATA_DIR"
