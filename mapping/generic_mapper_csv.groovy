@@ -76,54 +76,55 @@ def loadS3Files(fileInput, matchPattern) {
 */
 
 //Define Edges and Vertices
-sampleVertex = {
- label "samplevertex"
-  key "sampleid"
+sampleVertex1 = {
+ label "samplevertex1"
+  key "sampleidv1"
 }
-
+sampleVertex2 = {
+ label "samplevertex2"
+  key "sampleidv2"
+}
 sampleEdge = {
  label "has_edge_name"
 
   outV "samplevertex1", {
-   label "samplevertex"
-    key "sampleid"
+   label "samplevertex1"
+   key "sampleidv1"
   }
 
  inV "samplevertex2", {
-  label "samplevertex1"
-   key "sampleid"
+  label "samplevertex2"
+  key "sampleidv2"
  }
 }
-
 //These are the load blocks. Create one for each file type you want to process.
 //use the getFiles utility to run the right code block for the files being passed to DGL
 //the files are passed using the parameter `inputfilename` which is provided in ./rundgl
 log.info("Input: " + inputfilename)
 getFiles(inputfilename,  filePattern).each{file ->
   sampleInput = File.csv(file).delimiter(",")
+  log.info("file :" + file)
 
-//ensure that the primary keys of your vertices are present in the file before processing a record
-  sampleEdgeInput = sampleInput.filter(noneBlank("sampleid")).transform {
+  sampleEdgeInput = sampleInput.filter(noneBlank("sampleidv1", "sampleidv2")).transform {
 //we use def to ensure that there is a copy of the map inside the script event loop. This is required
 //to keep things thread safe
 //we use a map inside edge definitions to provide nesting,
 //the edge has properties and two vertices, each vertex has it's own properties
    def sampleEdge=[:]
 
-    sampleEdge["prop1"]=it["prop1e"]
+    sampleEdge["prop1e"]=it["prop1e"]
 //you can manipulate names and values in the mapping, just make sure the name inside the it array
 //matches the name of the property in your json file exactly (case sensitive)
-    sampleEdge["prop2"]=it["Prop2e"]
+    sampleEdge["Prop2e"]=it["Prop2e"]
 //the vertices are defined as maps so they can hold their properties and keys
     sampleEdge["samplevertex1"]=[:]
     sampleEdge["samplevertex2"]=[:]
 //the name of the key needs to match the name of the key in the vertex definition above
-    sampleEdge["samplevertex1"]["sampleid"]=it["sampleidv1"]
-    sampleEdge["samplevertex1"]["prop1"]=it["prop1v1"]
-    sampleEdge["samplevertex2"]["sampleid"]=it["sampleidv2"]
+    sampleEdge["samplevertex1"]["sampleidv1"]=it["sampleidv1"]
+    sampleEdge["samplevertex1"]["prop1v1"]=it["prop1v1"]
+    sampleEdge["samplevertex2"]["sampleidv2"]=it["sampleidv2"]
 //notice here I am hardcoding a property which will be the same for all samplevertex2's
-    sampleEdge["samplevertex2"]["prop1"]="card-coded-prop"
-    sampleEdge["samplevertex2"]["prop2"]=it["Prop2v2"]
+    sampleEdge["samplevertex2"]["Prop2v2"]=it["Prop2v2"]
 
     //null check for vertices
     sampleEdge["samplevertex1"] = removeBlank(sampleEdge["samplevertex1"])
@@ -142,6 +143,7 @@ getFiles(inputfilename,  filePattern).each{file ->
 //continue to have the properties on reads (cassandra writes are sparse).
   log.info("loading: sample edge")
   load(sampleEdgeInput).asEdges(sampleEdge)
+//  load(sampleInput).asVertices(sampleVertex1)
 
 }
 

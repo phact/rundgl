@@ -1,4 +1,5 @@
 gendata
 installgrc
-rundgl
 installgnuplot
+schema
+rundgl
