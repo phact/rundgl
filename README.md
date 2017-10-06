@@ -1,9 +1,3 @@
----
-date: 2017-05-19T21:52:39
-title: rundgl
-type: index
-weight: 0
----
 
 This is a guide for how to use the rundgl - graph data loading asset brought to you by the Vanguard team.
 
