@@ -1,13 +1,21 @@
 #!/bin/bash
 
 MAPPING_PATH=./mapping/generic_mapper_csv.groovy
-HOST=localhost
+HOST=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'|grep -v "172.17.0.1")
+echo $HOST
+
 #point to DGL home
 DGL_DIR=$(ls /tmp/dse-graph-loader-*/dse-graph-loader-*-uberjar.jar)
 DATA_DIR="data/"
 GRAPH_NAME="genericgraph"
 FILENAME_PATTERN=".csv"
 DATA_FULL_DIR="$PWD"/"$DATA_DIR"
+
+if [ -d /mnt/ephemeral/ebdata ]; then
+    DATA_FULL_DIR="/mnt/ephemeral/ebdata/"
+    DATA_DIR="/mnt/ephemeral/ebdata/"
+fi
+
 if [ -n "$1" ]; then
   HOST=$1
 fi

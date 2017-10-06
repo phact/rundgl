@@ -1,2 +1,8 @@
-cd data && ./runebdse > out.csv
-echo 'prop1e,Prop2e,sampleidv1,sampleidv2,Prop2v2' | cat - out.csv > temp && mv temp out.csv
+DATADIR='.'
+if [ -d /mnt/ephemeral ]; then
+    mkdir /mnt/ephemeral/ebdata
+    DATADIR=/mnt/ephemeral/ebdata
+    cp data/temp $DATADIR/temp
+fi
+cd data && ./runebdse > $DATADIR/out.csv
+echo 'prop1e,Prop2e,sampleidv1,sampleidv2,Prop2v2' | cat - $DATADIR/out.csv > $DATADIR/temp && mv $DATADIR/temp $DATADIR/out.csv
