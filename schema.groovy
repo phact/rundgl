@@ -1,5 +1,4 @@
-//stick the RPC_ADRESS in /etc/dse/graph/gremlin-console/conf/remote.yaml
-//then run cat schema.groovy|dse gremlin-console
+//run cat schema.groovy|dse gremlin-console
 system.graph('genericgraph').ifNotExists().create()
 :remote config alias g genericgraph.g
 

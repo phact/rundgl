@@ -1,3 +1,38 @@
 languageCode = "en-us"
-title = "rundgl Docs"
-theme = "hugo-theme-learn"
+title = "rundgl"
+theme = "hugo-material-docs"
+metadataformat = "yaml"
+canonifyurls = true
+
+[params]
+    description = "rundgl"
+
+    logo = "images/asset-hub.svg"
+    favicon = "/images/asset-hub.png"
+
+[params.palette]
+    primary = "grey"
+    accent  = "teal"
+
+[params.font]
+    text = "Roboto"
+    code = "Roboto Mono"
+
+[social]
+    github  = "phact/rundgl"
+
+[blackfriday]
+    smartypants    = true
+    fractions = true
+    smartDashes = true
+    plainIDAnchors = true
+
+
+[[menu.main]]
+    name   = "rundgl"
+    url    = "/"
+    weight = 10
+[[menu.main]]
+    name   = "Build and Run"
+    url    = "buildandrun/"
+    weight = 100

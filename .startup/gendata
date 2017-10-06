@@ -1,2 +1,2 @@
-cd data && ./runebdse
-echo 'prop1e,Prop2e,sampleidv1,sampleidv2,Prop2v2' | cat - out.txt > temp && mv temp out.csv
+cd data && ./runebdse > out.csv
+echo 'prop1e,Prop2e,sampleidv1,sampleidv2,Prop2v2' | cat - out.csv > temp && mv temp out.csv

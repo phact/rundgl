@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rundgl</title>
+    <link>/</link>
+    <description>Recent content on rundgl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Sep 2017 22:29:36 -0400</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Build and Run</title>
+      <link>/buildandrun/</link>
+      <pubDate>Thu, 07 Sep 2017 22:29:36 -0400</pubDate>
+      
+      <guid>/buildandrun/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Architecture</title>
+      <link>/architecture/</link>
+      <pubDate>Thu, 07 Sep 2017 22:29:36 -0400</pubDate>
+      
+      <guid>/architecture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Diagram</title>
+      <link>/architecture/architecture/</link>
+      <pubDate>Thu, 07 Sep 2017 22:35:05 -0400</pubDate>
+      
+      <guid>/architecture/architecture/</guid>
+      <description>This section details the architecture demonstrated in this reference field asset.
+Architecture Diagram graph LR J[&amp;#34;JSON&amp;#34;] C[&amp;#34;CSV&amp;#34;] A[&amp;#34;Graphson&amp;#34;] R[&amp;#34;RDBMS&amp;#34;] B[&amp;#34;...&amp;#34;] H[&amp;#34;HDFS&amp;#34;] G[&amp;#34;DSE Graph&amp;#34;] S[&amp;#34;rundgl script&amp;#34;] M[&amp;#34;Groovy Mapper&amp;#34;]--&amp;#34;Business Logic&amp;#34;--&amp;gt;D J--&amp;#34;input&amp;#34;--&amp;gt;D[&amp;#34;DGL&amp;#34;] C--&amp;#34;input&amp;#34;--&amp;gt;D H--&amp;#34;input&amp;#34;--&amp;gt;D R--&amp;#34;input&amp;#34;--&amp;gt;D A--&amp;#34;input&amp;#34;--&amp;gt;D B--&amp;#34;input&amp;#34;--&amp;gt;D S--&amp;#34;executes&amp;#34;--&amp;gt;D D--&amp;#34;bulk loading&amp;#34;--&amp;gt;G   The DGL is a single process, multi-threaded app, that can take data from multiple sources and using business logic defined in a groovy mapping file, load the data in a bulk fashion into DSE Graph.</description>
+    </item>
+    
+    <item>
+      <title>Getting Started</title>
+      <link>/buildandrun/build_and_run/</link>
+      <pubDate>Thu, 07 Sep 2017 22:35:05 -0400</pubDate>
+      
+      <guid>/buildandrun/build_and_run/</guid>
+      <description>rundgl - Bulk data loading into DSE Graph
+##Startup Script
+This Asset leverages simple-startup. To start the entire asset run ./startup all for other options run ./startup
+These docs will be found on port :1313</description>
+    </item>
+    
+    <item>
+      <title>rundgl</title>
+      <link>/</link>
+      <pubDate>Fri, 19 May 2017 21:52:39 +0000</pubDate>
+      
+      <guid>/</guid>
+      <description>This is a guide for how to use the rundgl - graph data loading asset brought to you by the Vanguard team.
+Motivation A common challenge in early stage graph deals is to prove out the ability to load data quickly into DSE Graph. The DataStax Graph Loader (DGL) is an optimized loader for DSE graph that can help achieve high performance ingests against DSE Graph.
+The kinds of graphs we are focused on loading in this asset are idempotent graphs, graphs with custom IDs and single cardinality edges.</description>
+    </item>
+    
+  </channel>
+</rss>

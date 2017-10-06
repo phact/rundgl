@@ -2,8 +2,8 @@
 
 MAPPING_PATH=./mapping/generic_mapper_csv.groovy
 HOST=localhost
-#either pull dgl to this path or point to DGL home
-DGL_DIR=dse-graph-loader-5.1.0-uberjar.jar
+#point to DGL home
+DGL_DIR=$(ls /tmp/dse-graph-loader-*/dse-graph-loader-*-uberjar.jar)
 DATA_DIR="data/"
 GRAPH_NAME="genericgraph"
 FILENAME_PATTERN=".csv"
