@@ -61,7 +61,7 @@ for bucket in `seq "$BUCKETCOUNT"` ; do
   echo "Processing $FILELISTCOUNT Files: $FILELIST"
 
 #grc is nice for aesthetics, if you don't want to install it just comment out this line.
-  grc \
+#  grc \
     java \
       -Xloggc:loader.gclog \
       -XX:+PrintGCDateStamps \
