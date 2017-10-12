@@ -19,7 +19,7 @@ The kinds of graphs we are focused on loading in this asset are idempotent graph
 
 ### Business Take Aways
 
-DSE Graph gives businesses the ability to extract value from relationships in their data in a scalabile, always on fashion. Unlike analytical graph engines which load a static graph to memory and then crunch that static graph for insights, an operational graph is constantly changing as the real world concepts whose relationships and vertices it represents are created, updated, and deleted.
+DSE Graph gives businesses the ability to extract value from relationships in their data in a scalable, always on fashion. Unlike analytical graph engines which load a static graph to memory and then crunch that static graph for insights, an operational graph is constantly changing as the real world concepts whose relationships and vertices it represents are created, updated, and deleted.
 
 For graphs that power business critical applications, are large, and are constantly changing, DSE Graph truly shines.
 
