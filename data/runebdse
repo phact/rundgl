@@ -1,1 +1,1 @@
-/tmp/ebdse/ebdse run type=csv yaml=generic_graph cycles=10000000 threads=200
+/tmp/ebdse/ebdse run type=stdout yaml=generic_graph cycles=10000000 threads=200
