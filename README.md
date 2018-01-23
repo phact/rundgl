@@ -9,7 +9,7 @@ The kinds of graphs we are focused on loading in this asset are idempotent graph
 
 [Part 1 - Theory](https://www.datastax.com/dev/blog/large-graph-loading-best-practices-strategies-part-1)
 
-[Part 2 - Practice](://www.datastax.com/dev/blog/large-graph-loading-tactics-part-2)
+[Part 2 - Practice](https://www.datastax.com/dev/blog/large-graph-loading-tactics-part-2)
 
 ### What is included?
 
