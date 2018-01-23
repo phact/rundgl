@@ -1,11 +1,4 @@
 name: generic_graph
-statements:
-  - prop1e
-  - Prop2e
-  - sampleidv1
-  - sampleidv2
-  - prop1v1
-  - Prop2v2
 bindings:
   prop1e: NumberNameToString()
   Prop2e: NumberNameToString()
