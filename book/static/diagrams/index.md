@@ -1,5 +1,0 @@
-+++
-title = "Diagrams"
-+++
-
-Design Docs
