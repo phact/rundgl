@@ -7,9 +7,11 @@ A common challenge in early stage graph deals is to prove out the ability to loa
 
 The kinds of graphs we are focused on loading in this asset are idempotent graphs, graphs with custom IDs and single cardinality edges. More information around the motivation for this asset can be found in the two part blog series on loading billions of vertices into DSE Graph:
 
-[Part 1 - Theory](https://www.datastax.com/dev/blog/large-graph-loading-best-practices-strategies-part-1)
+<a href="https://www.datastax.com/dev/blog/large-graph-loading-best-practices-strategies-part-1" target="_blank">Part 1 - Theory</a>
 
-[Part 2 - Practice](://www.datastax.com/dev/blog/large-graph-loading-tactics-part-2)
+<a href="https://www.datastax.com/dev/blog/large-graph-loading-tactics-part-2" target="_blank">Part 2 - Practice</a>
+
+
 
 ### What is included?
 
